@@ -6,7 +6,8 @@ import { HowItWorks } from "@/components/features/items/HowItWorks";
 import { SystemOverview } from "@/components/features/items/SystemOverview";
 import { RecentTransactions } from "@/components/features/items/RecentTransactions";
 import { YourClaims } from "@/components/features/claims/YourClaims";
-import { recentItems } from "@/services/itemService";
+import { useEffect, useState } from "react";
+import { getItems } from "@/services/itemService";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,6 +20,17 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        console.log("HOME DATA:", data);
+        setItems(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <AppShell>
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6">
@@ -28,11 +40,14 @@ function Dashboard() {
           <section className="rounded-2xl border border-border bg-card p-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="font-semibold text-base">Recently Found Items</h2>
-              <button className="text-xs text-primary hover:underline font-medium">View All</button>
+              <button className="text-xs text-primary hover:underline font-medium">
+                View All
+              </button>
             </div>
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {recentItems.map((item) => (
-                <ItemCard key={item.id} item={item} />
+              {items.slice(0, 4).map((item) => (
+                <ItemCard key={item._id} item={item} />
               ))}
             </div>
           </section>
