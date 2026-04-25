@@ -1,63 +1,31 @@
-const itemService = require('../services/item.service');
+// backend/src/controllers/item.controller.js
+const Item = require("../models/item.model");
 
-const getAllItems = async (req, res, next) => {
+exports.createItem = async (req, res) => {
   try {
-    const items = await itemService.getAllItems();
-    res.json(items);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getItemById = async (req, res, next) => {
-  try {
-    const item = await itemService.getItemById(req.params.id);
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.json(item);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const createItem = async (req, res, next) => {
-  try {
-    const item = await itemService.createItem(req.body);
+    const item = await Item.create(req.body);
     res.status(201).json(item);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    res.status(500).json({ message: "Error creating item" });
   }
 };
 
-const updateItem = async (req, res, next) => {
-  try {
-    const item = await itemService.updateItem(req.params.id, req.body);
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.json(item);
-  } catch (error) {
-    next(error);
-  }
+exports.getAllItems = async (req, res) => {
+  const items = await Item.find().sort({ createdAt: -1 });
+  res.json(items);
 };
 
-const deleteItem = async (req, res, next) => {
-  try {
-    const item = await itemService.deleteItem(req.params.id);
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-    res.json({ message: 'Item deleted successfully' });
-  } catch (error) {
-    next(error);
-  }
+exports.getItemById = async (req, res) => {
+  const item = await Item.findById(req.params.id);
+  res.json(item);
 };
 
-module.exports = {
-  getAllItems,
-  getItemById,
-  createItem,
-  updateItem,
-  deleteItem
+exports.updateItem = async (req, res) => {
+  const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(item);
+};
+
+exports.deleteItem = async (req, res) => {
+  await Item.findByIdAndDelete(req.params.id);
+  res.json({ message: "Deleted" });
 };

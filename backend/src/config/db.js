@@ -1,8 +1,14 @@
+// backend/src/config/db.js
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGODB_URI);
-  console.log("MongoDB Connected");
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected ✅");
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;

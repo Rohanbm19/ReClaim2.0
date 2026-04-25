@@ -1,10 +1,10 @@
-require('dotenv').config();
-const express = require('express');
-const app = require('./app');
-const config = require('./config/env');
+// backend/server.js
+require("dotenv").config();
+const app = require("./app");
+const connectDB = require("./config/db");
 
-const PORT = config.port || 3001;
+connectDB();
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} in ${config.nodeEnv} mode`);
+app.listen(5000, () => {
+  console.log("Server running on port 5000 🚀");
 });
