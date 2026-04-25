@@ -1,7 +1,9 @@
-import app from "./app.js";
+const express = require('express');
+const app = require('./app');
+const config = require('./config/env');
 
-const PORT = 5000;
+const PORT = config.port || 3001;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT} in ${config.nodeEnv} mode`);
 });

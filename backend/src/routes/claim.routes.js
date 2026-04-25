@@ -1,12 +1,11 @@
-import express from "express";
-import {
-  createClaim,
-  getMyClaims,
-} from "../controllers/claim.controller.js";
-
+const express = require('express');
 const router = express.Router();
+const claimController = require('../controllers/claim.controller');
 
-router.post("/", createClaim);
-router.get("/my", getMyClaims);
+router.get('/', claimController.getAllClaims);
+router.get('/:id', claimController.getClaimById);
+router.post('/', claimController.createClaim);
+router.put('/:id', claimController.updateClaim);
+router.delete('/:id', claimController.deleteClaim);
 
-export default router;
+module.exports = router;

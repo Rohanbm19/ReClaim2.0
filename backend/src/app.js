@@ -1,16 +1,30 @@
-import express from "express";
-import cors from "cors";
-import routes from "./routes/index.js";
+const express = require('express');
+const cors = require('cors');
+const db = require('./config/db');
+const errorMiddleware = require('./middlewares/error.middleware');
+const itemRoutes = require('./routes/item.routes');
+const claimRoutes = require('./routes/claim.routes');
 
 const app = express();
 
+// Connect to database
+db.connect();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", routes);
+// Routes
+app.use('/api/items', itemRoutes);
+app.use('/api/claims', claimRoutes);
 
-app.get("/", (req, res) => {
-  res.send("API working");
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
 });
 
-export default app; // ✅ MUST BE HERE
+// Error handling middleware
+app.use(errorMiddleware);
+
+module.exports = app;

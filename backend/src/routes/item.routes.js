@@ -1,9 +1,11 @@
-import express from "express";
-import { getItems } from "../controllers/item.controller.js";
-
+const express = require('express');
 const router = express.Router();
+const itemController = require('../controllers/item.controller');
 
-// ✅ THIS MUST EXIST
-router.get("/", getItems);
+router.get('/', itemController.getAllItems);
+router.get('/:id', itemController.getItemById);
+router.post('/', itemController.createItem);
+router.put('/:id', itemController.updateItem);
+router.delete('/:id', itemController.deleteItem);
 
-export default router;
+module.exports = router;
