@@ -24,9 +24,11 @@ export function HeroBanner() {
     Report Found Item
   </button>
 </Link>
-            <button className="px-5 py-2.5 rounded-xl bg-card border border-border text-sm font-medium hover:bg-muted transition-colors">
-              Browse Items
-            </button>
+            <Link to="/admin/report-item">
+              <button className="px-5 py-2.5 rounded-xl bg-card border border-border text-sm font-medium hover:bg-muted transition-colors">
+                Admin
+              </button>
+            </Link>
           </div>
         </div>
         <div className="hidden lg:flex justify-end">

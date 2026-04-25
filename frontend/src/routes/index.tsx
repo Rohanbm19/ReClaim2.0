@@ -1,66 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell } from "@/components/layout/AppShell";
-import { HeroBanner } from "@/components/features/items/HeroBanner";
-import { ItemCard } from "@/components/features/items/ItemCard";
-import { HowItWorks } from "@/components/features/items/HowItWorks";
-import { SystemOverview } from "@/components/features/items/SystemOverview";
-import { RecentTransactions } from "@/components/features/items/RecentTransactions";
-import { YourClaims } from "@/components/features/claims/YourClaims";
-import { useEffect, useState } from "react";
-import { getItems } from "@/services/itemService";
+import LoginForm from "@/components/features/auth/LoginForm";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Dashboard — Campus Lost & Found" },
-      { name: "description", content: "Blockchain-based lost and found system for smart campuses." },
-    ],
-  }),
-  component: Dashboard,
+  component: LoginPage,
 });
 
-function Dashboard() {
-  const [items, setItems] = useState<any[]>([]);
-
-  useEffect(() => {
-    getItems()
-      .then((data) => {
-        console.log("HOME DATA:", data);
-        setItems(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
+function LoginPage() {
   return (
-    <AppShell>
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6">
-        <div className="space-y-6 min-w-0">
-          <HeroBanner />
+    <div className="min-h-screen bg-slate-100 flex">
+      <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-indigo-950 to-violet-700 text-white items-center justify-center p-12">
+        <div>
+          <h1 className="text-5xl font-bold mb-6">
+            Campus Lost & Found
+          </h1>
 
-          <section className="rounded-2xl border border-border bg-card p-6">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="font-semibold text-base">Recently Found Items</h2>
-              <button className="text-xs text-primary hover:underline font-medium">
-                View All
-              </button>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {items.slice(0, 4).map((item) => (
-                <ItemCard key={item._id} item={item} />
-              ))}
-            </div>
-          </section>
-
-          <HowItWorks />
+          <p className="text-xl text-violet-100">
+            Student & Admin Access Portal
+          </p>
         </div>
-
-        <aside className="space-y-6">
-          <SystemOverview />
-          <RecentTransactions />
-          <YourClaims />
-        </aside>
       </div>
-    </AppShell>
+
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6">
+        <LoginForm />
+      </div>
+    </div>
   );
 }

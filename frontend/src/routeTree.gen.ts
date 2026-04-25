@@ -17,6 +17,7 @@ import { Route as MyItemsRouteImport } from './routes/my-items'
 import { Route as MyClaimsRouteImport } from './routes/my-claims'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HelpRouteImport } from './routes/help'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminReportItemRouteImport } from './routes/admin/report-item'
@@ -61,6 +62,11 @@ const HelpRoute = HelpRouteImport.update({
   path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrowseRoute = BrowseRouteImport.update({
   id: '/browse',
   path: '/browse',
@@ -80,6 +86,7 @@ const AdminReportItemRoute = AdminReportItemRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
@@ -87,11 +94,13 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
@@ -99,12 +108,14 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
@@ -112,6 +123,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRouteTypes {
@@ -119,6 +131,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/browse'
+    | '/dashboard'
     | '/help'
     | '/login'
     | '/my-claims'
@@ -126,11 +139,13 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
     | '/admin/report-item'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/browse'
+    | '/dashboard'
     | '/help'
     | '/login'
     | '/my-claims'
@@ -138,11 +153,13 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
     | '/admin/report-item'
   id:
     | '__root__'
     | '/'
     | '/browse'
+    | '/dashboard'
     | '/help'
     | '/login'
     | '/my-claims'
@@ -150,12 +167,14 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
     | '/admin/report-item'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrowseRoute: typeof BrowseRoute
+  DashboardRoute: typeof DashboardRoute
   HelpRoute: typeof HelpRoute
   LoginRoute: typeof LoginRoute
   MyClaimsRoute: typeof MyClaimsRoute
@@ -163,6 +182,7 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
   ReportRoute: typeof ReportRoute
+  ReportfoundRoute: typeof ReportfoundRoute
   AdminReportItemRoute: typeof AdminReportItemRoute
 }
 
@@ -224,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/browse': {
       id: '/browse'
       path: '/browse'
@@ -251,6 +278,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrowseRoute: BrowseRoute,
+  DashboardRoute: DashboardRoute,
   HelpRoute: HelpRoute,
   LoginRoute: LoginRoute,
   MyClaimsRoute: MyClaimsRoute,
@@ -258,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
   ReportRoute: ReportRoute,
+  ReportfoundRoute: ReportfoundRoute,
   AdminReportItemRoute: AdminReportItemRoute,
 }
 export const routeTree = rootRouteImport

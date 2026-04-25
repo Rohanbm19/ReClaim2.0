@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { studentLogin, adminLogin } from "@/services/authService";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -20,44 +19,36 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleStudentLogin = async (e: any) => {
+  // ✅ STUDENT LOGIN (FAKE AUTH)
+  const handleStudentLogin = (e: any) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      setError("");
+    setLoading(true);
+    setError("");
 
-      const data = await studentLogin(student);
-
-      localStorage.setItem("token", data.token);
+    setTimeout(() => {
+      localStorage.setItem("token", "dummy-token");
       localStorage.setItem("role", "student");
 
       navigate({ to: "/" });
-    } catch {
-      setError("Invalid student credentials");
-    } finally {
       setLoading(false);
-    }
+    }, 500);
   };
 
-  const handleAdminLogin = async (e: any) => {
+  // ✅ ADMIN LOGIN (FAKE AUTH)
+  const handleAdminLogin = (e: any) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      setError("");
+    setLoading(true);
+    setError("");
 
-      const data = await adminLogin(admin);
-
-      localStorage.setItem("token", data.token);
+    setTimeout(() => {
+      localStorage.setItem("token", "dummy-token");
       localStorage.setItem("role", "admin");
 
       navigate({ to: "/admin/report-item" });
-    } catch {
-      setError("Invalid admin credentials");
-    } finally {
       setLoading(false);
-    }
+    }, 500);
   };
 
   return (
@@ -128,9 +119,13 @@ export default function LoginForm() {
             }
           />
 
-          <button className="w-full bg-violet-600 text-white py-3 rounded-xl">
-            {loading ? "Please wait..." : "Login as Student"}
-          </button>
+           <button
+  type="button"
+  onClick={() => navigate({ to: "/dashboard" })}
+  className="w-full bg-violet-600 text-white py-3 rounded-xl"
+>
+  Go to Dashboard
+</button>
         </form>
       )}
 
@@ -161,9 +156,13 @@ export default function LoginForm() {
             }
           />
 
-          <button className="w-full bg-violet-600 text-white py-3 rounded-xl">
-            {loading ? "Please wait..." : "Login as Admin"}
-          </button>
+        <button
+  type="button"
+  onClick={() => navigate({ to: "/dashboard" })}
+  className="w-full bg-violet-600 text-white py-3 rounded-xl"
+>
+  Go to Dashboard
+</button>
         </form>
       )}
     </div>

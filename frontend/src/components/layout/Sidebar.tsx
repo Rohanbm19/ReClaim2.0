@@ -41,7 +41,7 @@ export function Sidebar() {
           <div className="font-semibold leading-tight text-sidebar-primary-foreground">
             Campus Lost &amp; Found
           </div>
-          <div className="text-xs text-sidebar-foreground/60">Blockchain Based System</div>
+          <div className="text-xs text-sidebar-foreground/60"></div>
         </div>
       </div>
 
