@@ -15,9 +15,11 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MyItemsRouteImport } from './routes/my-items'
 import { Route as MyClaimsRouteImport } from './routes/my-claims'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminReportItemRouteImport } from './routes/admin/report-item'
 
 const ReportfoundRoute = ReportfoundRouteImport.update({
   id: '/reportfound',
@@ -49,6 +51,11 @@ const MyClaimsRoute = MyClaimsRouteImport.update({
   path: '/my-claims',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HelpRoute = HelpRouteImport.update({
   id: '/help',
   path: '/help',
@@ -64,40 +71,48 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminReportItemRoute = AdminReportItemRouteImport.update({
+  id: '/admin/report-item',
+  path: '/admin/report-item',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/help': typeof HelpRoute
+  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
-  '/reportfound': typeof ReportfoundRoute
+  '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/help': typeof HelpRoute
+  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
-  '/reportfound': typeof ReportfoundRoute
+  '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
   '/help': typeof HelpRoute
+  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
-  '/reportfound': typeof ReportfoundRoute
+  '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,46 +120,50 @@ export interface FileRouteTypes {
     | '/'
     | '/browse'
     | '/help'
+    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
     | '/report'
-    | '/reportfound'
+    | '/admin/report-item'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/browse'
     | '/help'
+    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
     | '/report'
-    | '/reportfound'
+    | '/admin/report-item'
   id:
     | '__root__'
     | '/'
     | '/browse'
     | '/help'
+    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
     | '/report'
-    | '/reportfound'
+    | '/admin/report-item'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrowseRoute: typeof BrowseRoute
   HelpRoute: typeof HelpRoute
+  LoginRoute: typeof LoginRoute
   MyClaimsRoute: typeof MyClaimsRoute
   MyItemsRoute: typeof MyItemsRoute
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
   ReportRoute: typeof ReportRoute
-  ReportfoundRoute: typeof ReportfoundRoute
+  AdminReportItemRoute: typeof AdminReportItemRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -191,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyClaimsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/help': {
       id: '/help'
       path: '/help'
@@ -212,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/report-item': {
+      id: '/admin/report-item'
+      path: '/admin/report-item'
+      fullPath: '/admin/report-item'
+      preLoaderRoute: typeof AdminReportItemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -219,12 +252,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrowseRoute: BrowseRoute,
   HelpRoute: HelpRoute,
+  LoginRoute: LoginRoute,
   MyClaimsRoute: MyClaimsRoute,
   MyItemsRoute: MyItemsRoute,
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
   ReportRoute: ReportRoute,
-  ReportfoundRoute: ReportfoundRoute,
+  AdminReportItemRoute: AdminReportItemRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
