@@ -22,8 +22,8 @@ const navItems = [
   { to: ROUTES.myClaims, label: "My Claims", icon: FileCheck2 },
   { to: ROUTES.report, label: "Report Item", icon: PlusSquare },
   { to: ROUTES.myItems, label: "My Items", icon: Package },
-  { to: ROUTES.notifications, label: "Notifications", icon: Bell },
-  { to: ROUTES.profile, label: "Profile", icon: User },
+
+
   { to: ROUTES.help, label: "Help & Support", icon: HelpCircle },
 ] as const;
 

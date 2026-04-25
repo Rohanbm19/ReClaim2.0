@@ -1,20 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { ItemCard } from "@/components/features/items/ItemCard";
-import { recentItems } from "@/services/itemService";
+import { useEffect, useState } from "react";
+import { getItems } from "@/services/itemService";
 
 export const Route = createFileRoute("/browse")({
-  head: () => ({ meta: [{ title: "Browse Items — Campus Lost & Found" }] }),
   component: Browse,
 });
 
 function Browse() {
-  const all = [...recentItems, ...recentItems];
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        console.log("API DATA:", data);
+        setItems(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
-    <PageContainer title="Browse Items" description="All items currently registered on the blockchain.">
+    <PageContainer title="Browse Items">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {all.map((item, i) => (
-          <ItemCard key={i} item={item} />
+        {items.map((item) => (
+         <ItemCard key={item._id} item={item} />
         ))}
       </div>
     </PageContainer>
