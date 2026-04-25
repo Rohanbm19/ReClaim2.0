@@ -69,16 +69,7 @@ export default function LoginForm() {
           Student
         </button>
 
-        <button
-          onClick={() => setMode("admin")}
-          className={`py-2 rounded-xl font-semibold ${
-            mode === "admin"
-              ? "bg-violet-600 text-white"
-              : "bg-gray-100"
-          }`}
-        >
-          Admin
-        </button>
+        
       </div>
 
       {/* STUDENT */}
