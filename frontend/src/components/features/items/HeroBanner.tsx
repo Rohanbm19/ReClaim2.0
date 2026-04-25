@@ -1,4 +1,6 @@
 import heroImg from "@/assets/hero-shield.png";
+import { Link } from "@tanstack/react-router";
+
 
 export function HeroBanner() {
   return (
@@ -15,9 +17,13 @@ export function HeroBanner() {
             A blockchain-based lost &amp; found system for smart campuses.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <button className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium shadow-[var(--shadow-elevated)] hover:opacity-90 transition-opacity">
-              Report Found Item
-            </button>
+           
+
+<Link to="/reportfound">
+  <button className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium shadow-[var(--shadow-elevated)] hover:opacity-90 transition-opacity">
+    Report Found Item
+  </button>
+</Link>
             <button className="px-5 py-2.5 rounded-xl bg-card border border-border text-sm font-medium hover:bg-muted transition-colors">
               Browse Items
             </button>
