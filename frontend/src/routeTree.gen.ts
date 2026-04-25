@@ -16,6 +16,7 @@ import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MyItemsRouteImport } from './routes/my-items'
 import { Route as MyClaimsRouteImport } from './routes/my-claims'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as HerobannerRouteImport } from './routes/herobanner'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BrowseRouteImport } from './routes/browse'
@@ -57,6 +58,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HerobannerRoute = HerobannerRouteImport.update({
+  id: '/herobanner',
+  path: '/herobanner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HelpRoute = HelpRouteImport.update({
   id: '/help',
   path: '/help',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/browse': typeof BrowseRoute
   '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
+  '/herobanner': typeof HerobannerRoute
   '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/browse': typeof BrowseRoute
   '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
+  '/herobanner': typeof HerobannerRoute
   '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/browse': typeof BrowseRoute
   '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
+  '/herobanner': typeof HerobannerRoute
   '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/dashboard'
     | '/help'
+    | '/herobanner'
     | '/login'
     | '/my-claims'
     | '/my-items'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/dashboard'
     | '/help'
+    | '/herobanner'
     | '/login'
     | '/my-claims'
     | '/my-items'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/dashboard'
     | '/help'
+    | '/herobanner'
     | '/login'
     | '/my-claims'
     | '/my-items'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   BrowseRoute: typeof BrowseRoute
   DashboardRoute: typeof DashboardRoute
   HelpRoute: typeof HelpRoute
+  HerobannerRoute: typeof HerobannerRoute
   LoginRoute: typeof LoginRoute
   MyClaimsRoute: typeof MyClaimsRoute
   MyItemsRoute: typeof MyItemsRoute
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/herobanner': {
+      id: '/herobanner'
+      path: '/herobanner'
+      fullPath: '/herobanner'
+      preLoaderRoute: typeof HerobannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/help': {
       id: '/help'
       path: '/help'
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrowseRoute: BrowseRoute,
   DashboardRoute: DashboardRoute,
   HelpRoute: HelpRoute,
+  HerobannerRoute: HerobannerRoute,
   LoginRoute: LoginRoute,
   MyClaimsRoute: MyClaimsRoute,
   MyItemsRoute: MyItemsRoute,
