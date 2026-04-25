@@ -19,9 +19,9 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { to: ROUTES.dashboard, label: "Dashboard", icon: LayoutDashboard },
   { to: ROUTES.browse, label: "Browse Items", icon: Search },
-  { to: ROUTES.myClaims, label: "My Claims", icon: FileCheck2 },
+  
   { to: ROUTES.report, label: "Report Item", icon: PlusSquare },
-  { to: ROUTES.myItems, label: "My Items", icon: Package },
+  
 
 
   { to: ROUTES.help, label: "Help & Support", icon: HelpCircle },
