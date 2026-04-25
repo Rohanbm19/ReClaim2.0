@@ -32,9 +32,7 @@ function MyClaims() {
               <div className="text-xs text-muted-foreground">Claim ID: {c.id}</div>
             </div>
             <span className={`text-xs font-medium px-2 py-1 rounded-md ${statusColor[c.status]}`}>{c.status}</span>
-            <button className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium">
-              <QrCode className="h-3.5 w-3.5" /> View QR
-            </button>
+            
           </div>
         ))}
       </div>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { studentLogin, adminLogin } from "@/services/authService";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -18,46 +17,33 @@ export default function LoginForm() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleStudentLogin = async (e: any) => {
+  const handleStudentLogin = (e: any) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      setError("");
+    setLoading(true);
 
-      const data = await studentLogin(student);
-
-      localStorage.setItem("token", data.token);
+    setTimeout(() => {
       localStorage.setItem("role", "student");
+      localStorage.setItem("user", student.username);
 
-      navigate({ to: "/" });
-    } catch {
-      setError("Invalid student credentials");
-    } finally {
+      navigate({ to: "/dashboard" });
       setLoading(false);
-    }
+    }, 500);
   };
 
-  const handleAdminLogin = async (e: any) => {
+  const handleAdminLogin = (e: any) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      setError("");
+    setLoading(true);
 
-      const data = await adminLogin(admin);
-
-      localStorage.setItem("token", data.token);
+    setTimeout(() => {
       localStorage.setItem("role", "admin");
+      localStorage.setItem("admin", admin.adminName);
 
       navigate({ to: "/admin/report-item" });
-    } catch {
-      setError("Invalid admin credentials");
-    } finally {
       setLoading(false);
-    }
+    }, 500);
   };
 
   return (
@@ -70,7 +56,7 @@ export default function LoginForm() {
         Campus Lost & Found Login
       </p>
 
-      {/* Toggle Buttons */}
+      {/* Toggle */}
       <div className="grid grid-cols-2 gap-2 mb-6">
         <button
           onClick={() => setMode("student")}
@@ -95,13 +81,7 @@ export default function LoginForm() {
         </button>
       </div>
 
-      {error && (
-        <div className="bg-red-100 text-red-600 p-3 rounded-lg mb-4">
-          {error}
-        </div>
-      )}
-
-      {/* STUDENT LOGIN */}
+      {/* STUDENT */}
       {mode === "student" && (
         <form onSubmit={handleStudentLogin} className="space-y-4">
           <input
@@ -134,7 +114,7 @@ export default function LoginForm() {
         </form>
       )}
 
-      {/* ADMIN LOGIN */}
+      {/* ADMIN */}
       {mode === "admin" && (
         <form onSubmit={handleAdminLogin} className="space-y-4">
           <input
