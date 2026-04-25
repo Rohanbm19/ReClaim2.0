@@ -15,6 +15,10 @@ const claimSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  answers: [{
+    question: String,
+    answer: String
+  }],
   proof: {
     type: String // URL to proof document/image
   },
@@ -36,7 +40,7 @@ const claimSchema = new mongoose.Schema({
   }
 });
 
-claimSchema.pre('save', function(next) {
+claimSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });

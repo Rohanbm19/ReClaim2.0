@@ -1,4 +1,5 @@
 const Item = require('../models/item.model');
+const blockchainService = require('./blockchain.service');
 
 const getAllItems = async () => {
   return await Item.find().sort({ createdAt: -1 });
@@ -9,7 +10,13 @@ const getItemById = async (id) => {
 };
 
 const createItem = async (itemData) => {
-  const item = new Item(itemData);
+  // Record on blockchain
+  const bcResult = await blockchainService.recordTransaction(itemData);
+
+  const item = new Item({
+    ...itemData,
+    blockchainTxId: bcResult.txHash
+  });
   return await item.save();
 };
 

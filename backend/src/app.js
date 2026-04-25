@@ -8,7 +8,7 @@ const claimRoutes = require('./routes/claim.routes');
 const app = express();
 
 // Connect to database
-db.connect();
+db();
 
 // Middleware
 app.use(cors());
