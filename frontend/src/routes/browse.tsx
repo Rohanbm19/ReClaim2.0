@@ -1,20 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { ItemCard } from "@/components/features/items/ItemCard";
-import { recentItems } from "@/services/itemService";
 
 export const Route = createFileRoute("/browse")({
-  head: () => ({ meta: [{ title: "Browse Items — Campus Lost & Found" }] }),
   component: Browse,
 });
 
+const mockItems = [
+  {
+    id: "1",
+    name: "Black Wallet",
+    location: "Library",
+    reportedAgo: "2 hours ago",
+  },
+  {
+    id: "2",
+    name: "Red Bag",
+    location: "Cafeteria",
+    reportedAgo: "1 day ago",
+  },
+];
+
 function Browse() {
-  const all = [...recentItems, ...recentItems];
   return (
-    <PageContainer title="Browse Items" description="All items currently registered on the blockchain.">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {all.map((item, i) => (
-          <ItemCard key={i} item={item} />
+    <PageContainer
+      title="Browse Items"
+      description="Lost & Found Items"
+    >
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {mockItems.map((item) => (
+          <ItemCard key={item.id} item={item} />
         ))}
       </div>
     </PageContainer>

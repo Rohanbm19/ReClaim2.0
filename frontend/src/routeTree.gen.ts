@@ -21,6 +21,7 @@ import { Route as HelpRouteImport } from './routes/help'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ItemIdRouteImport } from './routes/item.$id'
 import { Route as AdminReportItemRouteImport } from './routes/admin/report-item'
 
 const ReportfoundRoute = ReportfoundRouteImport.update({
@@ -83,6 +84,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ItemIdRoute = ItemIdRouteImport.update({
+  id: '/item/$id',
+  path: '/item/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminReportItemRoute = AdminReportItemRouteImport.update({
   id: '/admin/report-item',
   path: '/admin/report-item',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/report': typeof ReportRoute
   '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
+  '/item/$id': typeof ItemIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/report': typeof ReportRoute
   '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
+  '/item/$id': typeof ItemIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/report': typeof ReportRoute
   '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
+  '/item/$id': typeof ItemIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/reportfound'
     | '/admin/report-item'
+    | '/item/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/reportfound'
     | '/admin/report-item'
+    | '/item/$id'
   id:
     | '__root__'
     | '/'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/reportfound'
     | '/admin/report-item'
+    | '/item/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   ReportRoute: typeof ReportRoute
   ReportfoundRoute: typeof ReportfoundRoute
   AdminReportItemRoute: typeof AdminReportItemRoute
+  ItemIdRoute: typeof ItemIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/item/$id': {
+      id: '/item/$id'
+      path: '/item/$id'
+      fullPath: '/item/$id'
+      preLoaderRoute: typeof ItemIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/report-item': {
       id: '/admin/report-item'
       path: '/admin/report-item'
@@ -309,6 +329,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReportRoute: ReportRoute,
   ReportfoundRoute: ReportfoundRoute,
   AdminReportItemRoute: AdminReportItemRoute,
+  ItemIdRoute: ItemIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

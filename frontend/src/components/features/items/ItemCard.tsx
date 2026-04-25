@@ -1,7 +1,9 @@
 import { MapPin, Clock, BadgeCheck } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 export function ItemCard({ item }: { item: any }) {
-  // ✅ Map backend fields → frontend UI fields
+  const navigate = useNavigate();
+
   const name = item.name || item.title;
   const location = item.location || item.locationFound;
   const image = item.image || "https://via.placeholder.com/150";
@@ -9,12 +11,14 @@ export function ItemCard({ item }: { item: any }) {
   const verified = item.verified ?? true;
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-4 hover:shadow-[var(--shadow-elevated)] hover:-translate-y-0.5 transition-all duration-200">
+    <div
+      onClick={() => navigate({ to: `/item/${item.id}` })}
+      className="cursor-pointer rounded-2xl border border-border bg-card p-4 hover:shadow-[var(--shadow-elevated)] hover:-translate-y-0.5 transition-all"
+    >
       <div className="aspect-square rounded-xl bg-muted/60 flex items-center justify-center overflow-hidden mb-4">
         <img
           src={image}
           alt={name}
-          loading="lazy"
           className="h-full w-full object-contain p-3"
         />
       </div>

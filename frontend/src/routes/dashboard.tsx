@@ -7,6 +7,7 @@ import { SystemOverview } from "@/components/features/items/SystemOverview";
 import { RecentTransactions } from "@/components/features/items/RecentTransactions";
 import { YourClaims } from "@/components/features/claims/YourClaims";
 import { recentItems } from "@/services/itemService";
+import { mockSystemItems } from "@/services/mockData";
 
 export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
@@ -41,7 +42,10 @@ function Dashboard() {
         </div>
 
         <aside className="space-y-6">
-          <SystemOverview />
+          <SystemOverview
+        items={mockSystemItems}
+        role="admin"
+      />
           <RecentTransactions />
           <YourClaims />
         </aside>
