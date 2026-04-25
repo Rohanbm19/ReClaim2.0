@@ -69,7 +69,16 @@ export default function LoginForm() {
           Student
         </button>
 
-        
+        <button
+          onClick={() => setMode("admin")}
+          className={`py-2 rounded-xl font-semibold ${
+            mode === "admin"
+              ? "bg-violet-600 text-white"
+              : "bg-gray-100"
+          }`}
+        >
+          Admin
+        </button>
       </div>
 
       {/* STUDENT */}
@@ -99,13 +108,9 @@ export default function LoginForm() {
             }
           />
 
-           <button
-  type="button"
-  onClick={() => navigate({ to: "/dashboard" })}
-  className="w-full bg-violet-600 text-white py-3 rounded-xl"
->
-  Go to Dashboard
-</button>
+          <button className="w-full bg-violet-600 text-white py-3 rounded-xl">
+            {loading ? "Please wait..." : "Login as Student"}
+          </button>
         </form>
       )}
 
@@ -136,13 +141,9 @@ export default function LoginForm() {
             }
           />
 
-        <button
-  type="button"
-  onClick={() => navigate({ to: "/dashboard" })}
-  className="w-full bg-violet-600 text-white py-3 rounded-xl"
->
-  Go to Dashboard
-</button>
+          <button className="w-full bg-violet-600 text-white py-3 rounded-xl">
+            {loading ? "Please wait..." : "Login as Admin"}
+          </button>
         </form>
       )}
     </div>
