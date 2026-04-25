@@ -9,15 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReportfoundRouteImport } from './routes/reportfound'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MyItemsRouteImport } from './routes/my-items'
 import { Route as MyClaimsRouteImport } from './routes/my-claims'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HelpRouteImport } from './routes/help'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminReportItemRouteImport } from './routes/admin/report-item'
 
+const ReportfoundRoute = ReportfoundRouteImport.update({
+  id: '/reportfound',
+  path: '/reportfound',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
@@ -43,9 +52,19 @@ const MyClaimsRoute = MyClaimsRouteImport.update({
   path: '/my-claims',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HelpRoute = HelpRouteImport.update({
   id: '/help',
   path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrowseRoute = BrowseRouteImport.update({
@@ -58,84 +77,124 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminReportItemRoute = AdminReportItemRouteImport.update({
+  id: '/admin/report-item',
+  path: '/admin/report-item',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
+  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
+  '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
+  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
+  '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
+  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
+  '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/browse'
+    | '/dashboard'
     | '/help'
+    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
+    | '/admin/report-item'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/browse'
+    | '/dashboard'
     | '/help'
+    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
+    | '/admin/report-item'
   id:
     | '__root__'
     | '/'
     | '/browse'
+    | '/dashboard'
     | '/help'
+    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
+    | '/admin/report-item'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrowseRoute: typeof BrowseRoute
+  DashboardRoute: typeof DashboardRoute
   HelpRoute: typeof HelpRoute
+  LoginRoute: typeof LoginRoute
   MyClaimsRoute: typeof MyClaimsRoute
   MyItemsRoute: typeof MyItemsRoute
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
   ReportRoute: typeof ReportRoute
+  ReportfoundRoute: typeof ReportfoundRoute
+  AdminReportItemRoute: typeof AdminReportItemRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reportfound': {
+      id: '/reportfound'
+      path: '/reportfound'
+      fullPath: '/reportfound'
+      preLoaderRoute: typeof ReportfoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/report': {
       id: '/report'
       path: '/report'
@@ -171,11 +230,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyClaimsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/help': {
       id: '/help'
       path: '/help'
       fullPath: '/help'
       preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/browse': {
@@ -192,18 +265,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/report-item': {
+      id: '/admin/report-item'
+      path: '/admin/report-item'
+      fullPath: '/admin/report-item'
+      preLoaderRoute: typeof AdminReportItemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrowseRoute: BrowseRoute,
+  DashboardRoute: DashboardRoute,
   HelpRoute: HelpRoute,
+  LoginRoute: LoginRoute,
   MyClaimsRoute: MyClaimsRoute,
   MyItemsRoute: MyItemsRoute,
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
   ReportRoute: ReportRoute,
+  ReportfoundRoute: ReportfoundRoute,
+  AdminReportItemRoute: AdminReportItemRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
