@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReportfoundRouteImport } from './routes/reportfound'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -21,6 +22,11 @@ import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminReportItemRouteImport } from './routes/admin/report-item'
 
+const ReportfoundRoute = ReportfoundRouteImport.update({
+  id: '/reportfound',
+  path: '/reportfound',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesByTo {
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRoutesById {
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
+  '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
 }
 export interface FileRouteTypes {
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
     | '/admin/report-item'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
     | '/admin/report-item'
   id:
     | '__root__'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/profile'
     | '/report'
+    | '/reportfound'
     | '/admin/report-item'
   fileRoutesById: FileRoutesById
 }
@@ -170,11 +182,19 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
   ReportRoute: typeof ReportRoute
+  ReportfoundRoute: typeof ReportfoundRoute
   AdminReportItemRoute: typeof AdminReportItemRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reportfound': {
+      id: '/reportfound'
+      path: '/reportfound'
+      fullPath: '/reportfound'
+      preLoaderRoute: typeof ReportfoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/report': {
       id: '/report'
       path: '/report'
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
   ReportRoute: ReportRoute,
+  ReportfoundRoute: ReportfoundRoute,
   AdminReportItemRoute: AdminReportItemRoute,
 }
 export const routeTree = rootRouteImport

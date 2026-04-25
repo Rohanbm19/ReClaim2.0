@@ -1,5 +1,6 @@
 import { Bell, Search, ChevronDown } from "lucide-react";
 import avatar from "@/assets/avatar-user.jpg";
+import { Link } from "@tanstack/react-router";
 
 export function Topbar() {
   return (
@@ -14,30 +15,23 @@ export function Topbar() {
           />
         </div>
 
-        <div className="flex items-center gap-4">
-          <button className="relative p-2 rounded-full hover:bg-muted transition-colors" aria-label="Notifications">
-            <Bell className="h-5 w-5 text-muted-foreground" />
-            <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center">
-              3
-            </span>
-          </button>
-
-          <div className="flex items-center gap-3 pl-3 border-l border-border">
-            <img
-              src={avatar}
-              alt="Riya Sharma"
-              className="h-10 w-10 rounded-full object-cover"
-              width={40}
-              height={40}
-            />
-            <div className="hidden sm:block">
-              <div className="text-sm font-semibold leading-tight">Riya Sharma</div>
-              <div className="text-xs text-muted-foreground">Student</div>
-            </div>
-            <ChevronDown className="h-4 w-4 text-muted-foreground" />
-          </div>
+        <Link to="/notifications">
+  <button className="relative p-2 rounded-full hover:bg-muted transition-colors" aria-label="Notifications">
+    <Bell className="h-5 w-5 text-muted-foreground" />
+    <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center">
+      3
+    </span>
+  </button>
+</Link>
+          <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
+  <div className="hidden sm:block">
+    <div className="text-sm font-semibold leading-tight">Riya Sharma</div>
+    <div className="text-xs text-muted-foreground">Student</div>
+  </div>
+  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+</Link>
         </div>
-      </div>
+      
     </header>
   );
 }
