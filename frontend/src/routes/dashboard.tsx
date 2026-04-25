@@ -9,11 +9,18 @@ import { YourClaims } from "@/components/features/claims/YourClaims";
 import { recentItems } from "@/services/itemService";
 import { mockSystemItems } from "@/services/mockData";
 
+import React, { useEffect, useState } from "react";
+
 export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
 function Dashboard() {
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    recentItems().then(setItems).catch(console.error);
+  }, []);
   return (
     <AppShell>
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6">
@@ -32,8 +39,8 @@ function Dashboard() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {recentItems.map((item) => (
-                <ItemCard key={item.id} item={item} />
+              {items.map((item) => (
+                <ItemCard key={item._id || item.id} item={item} />
               ))}
             </div>
           </section>
@@ -43,9 +50,9 @@ function Dashboard() {
 
         <aside className="space-y-6">
           <SystemOverview
-        items={mockSystemItems}
-        role="admin"
-      />
+            items={mockSystemItems}
+            role="admin"
+          />
           <RecentTransactions />
           <YourClaims />
         </aside>

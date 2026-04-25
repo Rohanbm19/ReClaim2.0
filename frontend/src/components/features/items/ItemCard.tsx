@@ -4,7 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 export function ItemCard({ item }: { item: any }) {
   const navigate = useNavigate();
 
-  const name = item.name || item.title;
+  const name = item.itemName || item.name || item.title;
   const location = item.location || item.locationFound;
   const image = item.image || "https://via.placeholder.com/150";
   const reportedAgo = item.reportedAgo || "Recently";
@@ -12,7 +12,7 @@ export function ItemCard({ item }: { item: any }) {
 
   return (
     <div
-      onClick={() => navigate({ to: `/item/${item.id}` })}
+      onClick={() => navigate({ to: `/item/${item._id || item.id}` })}
       className="cursor-pointer rounded-2xl border border-border bg-card p-4 hover:shadow-[var(--shadow-elevated)] hover:-translate-y-0.5 transition-all"
     >
       <div className="aspect-square rounded-xl bg-muted/60 flex items-center justify-center overflow-hidden mb-4">
