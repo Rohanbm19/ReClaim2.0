@@ -17,34 +17,29 @@ export default function LoginForm() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  // ✅ STUDENT LOGIN (FAKE AUTH)
   const handleStudentLogin = (e: any) => {
     e.preventDefault();
 
     setLoading(true);
-    setError("");
 
     setTimeout(() => {
-      localStorage.setItem("token", "dummy-token");
       localStorage.setItem("role", "student");
+      localStorage.setItem("user", student.username);
 
-      navigate({ to: "/" });
+      navigate({ to: "/dashboard" });
       setLoading(false);
     }, 500);
   };
 
-  // ✅ ADMIN LOGIN (FAKE AUTH)
   const handleAdminLogin = (e: any) => {
     e.preventDefault();
 
     setLoading(true);
-    setError("");
 
     setTimeout(() => {
-      localStorage.setItem("token", "dummy-token");
       localStorage.setItem("role", "admin");
+      localStorage.setItem("admin", admin.adminName);
 
       navigate({ to: "/admin/report-item" });
       setLoading(false);
@@ -61,7 +56,7 @@ export default function LoginForm() {
         Campus Lost & Found Login
       </p>
 
-      {/* Toggle Buttons */}
+      {/* Toggle */}
       <div className="grid grid-cols-2 gap-2 mb-6">
         <button
           onClick={() => setMode("student")}
@@ -86,13 +81,7 @@ export default function LoginForm() {
         </button>
       </div>
 
-      {error && (
-        <div className="bg-red-100 text-red-600 p-3 rounded-lg mb-4">
-          {error}
-        </div>
-      )}
-
-      {/* STUDENT LOGIN */}
+      {/* STUDENT */}
       {mode === "student" && (
         <form onSubmit={handleStudentLogin} className="space-y-4">
           <input
@@ -129,7 +118,7 @@ export default function LoginForm() {
         </form>
       )}
 
-      {/* ADMIN LOGIN */}
+      {/* ADMIN */}
       {mode === "admin" && (
         <form onSubmit={handleAdminLogin} className="space-y-4">
           <input
