@@ -1,15 +1,37 @@
-import axios from "axios";
+const Item = require('../models/item.model');
+const blockchainService = require('./blockchain.service');
 
-const API = "http://localhost:5000/api/items";
-
-// ✅ ADD THIS (for fetching items)
-export const recentItems = async () => {
-  const res = await axios.get(API);
-  return res.data;
+const getAllItems = async () => {
+  return await Item.find().sort({ createdAt: -1 });
 };
 
-// ✅ already correct (for adding item)
-export const addFoundItem = async (data: any) => {
-  const res = await axios.post(API, data);
-  return res.data;
+const getItemById = async (id) => {
+  return await Item.findById(id);
+};
+
+const createItem = async (itemData) => {
+  // Record on blockchain
+  const bcResult = await blockchainService.recordTransaction(itemData);
+
+  const item = new Item({
+    ...itemData,
+    blockchainTxId: bcResult.txHash
+  });
+  return await item.save();
+};
+
+const updateItem = async (id, itemData) => {
+  return await Item.findByIdAndUpdate(id, itemData, { new: true, runValidators: true });
+};
+
+const deleteItem = async (id) => {
+  return await Item.findByIdAndDelete(id);
+};
+
+module.exports = {
+  getAllItems,
+  getItemById,
+  createItem,
+  updateItem,
+  deleteItem
 };
