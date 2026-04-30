@@ -108,9 +108,13 @@ export default function LoginForm() {
             }
           />
 
-          <button className="w-full bg-violet-600 text-white py-3 rounded-xl">
-            {loading ? "Please wait..." : "Login as Student"}
-          </button>
+           <button
+  type="button"
+  onClick={() => navigate({ to: "/dashboard" })}
+  className="w-full bg-violet-600 text-white py-3 rounded-xl"
+>
+  Go to Dashboard
+</button>
         </form>
       )}
 
@@ -141,9 +145,13 @@ export default function LoginForm() {
             }
           />
 
-          <button className="w-full bg-violet-600 text-white py-3 rounded-xl">
-            {loading ? "Please wait..." : "Login as Admin"}
-          </button>
+        <button
+  type="button"
+  onClick={() => navigate({ to: "/dashboard" })}
+  className="w-full bg-violet-600 text-white py-3 rounded-xl"
+>
+  Go to Dashboard
+</button>
         </form>
       )}
     </div>

@@ -16,11 +16,40 @@ function Report() {
     date: "",
     time: "",
     location: "",
+    questions: [
+      { question: "", answer: "" },
+      { question: "", answer: "" },
+      { question: "", answer: "" },
+    ],
   });
   const [error, setError] = useState("");
 
   const validateForm = () => {
-    return formData.itemName && formData.description && formData.date && formData.time && formData.location;
+    const isBasicValid = formData.itemName && formData.description && formData.date && formData.time && formData.location;
+    const areQuestionsValid = formData.questions.every((q) => q.question.trim() !== "" && q.answer.trim() !== "");
+    return isBasicValid && areQuestionsValid && formData.questions.length >= 3 && formData.questions.length <= 10;
+  };
+
+  const handleAddQuestion = () => {
+    if (formData.questions.length < 10) {
+      setFormData({
+        ...formData,
+        questions: [...formData.questions, { question: "", answer: "" }],
+      });
+    }
+  };
+
+  const handleRemoveQuestion = (index: number) => {
+    if (formData.questions.length > 3) {
+      const newQuestions = formData.questions.filter((_, i) => i !== index);
+      setFormData({ ...formData, questions: newQuestions });
+    }
+  };
+
+  const updateQuestion = (index: number, field: "question" | "answer", value: string) => {
+    const newQuestions = [...formData.questions];
+    newQuestions[index][field] = value;
+    setFormData({ ...formData, questions: newQuestions });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,6 +72,11 @@ function Report() {
         date: "",
         time: "",
         location: "",
+        questions: [
+          { question: "", answer: "" },
+          { question: "", answer: "" },
+          { question: "", answer: "" },
+        ],
       });
     } catch (err) {
       console.error(err);
@@ -98,6 +132,51 @@ function Report() {
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           />
         </Field>
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-medium">Verification Questions</h3>
+            {formData.questions.length < 10 && (
+              <button
+                type="button"
+                onClick={handleAddQuestion}
+                className="text-sm text-primary hover:underline font-medium"
+              >
+                + Add Question
+              </button>
+            )}
+          </div>
+          {formData.questions.map((q, i) => (
+            <div key={i} className="flex flex-col gap-3 p-4 border border-border rounded-xl bg-muted/20 relative">
+              {formData.questions.length > 3 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveQuestion(i)}
+                  className="absolute top-2 right-2 text-xs text-red-500 hover:text-red-700 font-medium"
+                >
+                  Delete
+                </button>
+              )}
+              <Field label={`Question ${i + 1}`}>
+                <input
+                  className="input"
+                  placeholder="e.g. What is the color of the inner lining?"
+                  value={q.question}
+                  onChange={(e) => updateQuestion(i, "question", e.target.value)}
+                />
+              </Field>
+              <Field label={`Answer ${i + 1}`}>
+                <input
+                  className="input"
+                  placeholder="e.g. Red"
+                  value={q.answer}
+                  onChange={(e) => updateQuestion(i, "answer", e.target.value)}
+                />
+              </Field>
+            </div>
+          ))}
+          <p className="text-xs text-muted-foreground">Please provide between 3 and 10 questions to help verify the owner.</p>
+        </div>
         <Field label="Upload Photo">
           <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-border rounded-xl p-8 cursor-pointer hover:bg-muted/40 transition-colors">
             <Upload className="h-6 w-6 text-muted-foreground" />

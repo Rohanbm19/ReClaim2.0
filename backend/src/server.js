@@ -1,10 +1,28 @@
-// backend/server.js
-require("dotenv").config();
-const app = require("./app");
-const connectDB = require("./config/db");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import itemRoutes from "./routes/item.routes.js";
 
-connectDB();
+dotenv.config();
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000 🚀");
+const app = express();
+
+app.use(cors({
+  origin: "*", // later restrict to frontend URL
+}));
+
+app.use(express.json());
+
+// Add our item routes
+app.use("/api/items", itemRoutes);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

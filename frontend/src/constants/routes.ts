@@ -9,4 +9,5 @@ export const ROUTES = {
   help: "/help",
   login: "/login",
   register: "/register",
+  
 } as const;

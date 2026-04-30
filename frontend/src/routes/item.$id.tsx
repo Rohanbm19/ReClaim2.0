@@ -1,112 +1,164 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { getItemById, submitClaim } from "../services/itemService";
+import { createFileRoute, useParams } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { getItemById } from "../services/itemService";
 
 export const Route = createFileRoute("/item/$id")({
-  component: ItemPage,
+  component: ItemDetail,
 });
 
-function ItemPage() {
-  const { id } = Route.useParams();
+function ItemDetail() {
+  const { id } = useParams({ from: "/item/$id" });
 
   const [item, setItem] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
-  // Default questions since not all items have generated questions
-  const questions = [
-    "What specific features or marks prove this is yours?",
-    "When exactly did you notice it was missing?",
-    "Where is the last place you saw it?"
-  ];
-
-  const [answers, setAnswers] = useState<string[]>(
-    new Array(questions.length).fill("")
-  );
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    getItemById(id)
-      .then((data) => {
+    const fetchItem = async () => {
+      try {
+        const data = await getItemById(id);
         setItem(data);
+      } catch (error) {
+        console.error("Failed to fetch item:", error);
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+      }
+    };
+    fetchItem();
   }, [id]);
 
-  const handleChange = (value: string, index: number) => {
+  if (loading) return <div className="p-6">Loading item details...</div>;
+  if (!item) return <div className="p-6">Item not found ❌</div>;
+
+  // Handle items that might not have questions array
+  const questions = item.questions || [];
+
+  const handleChange = (index: number, value: string) => {
     const updated = [...answers];
     updated[index] = value;
     setAnswers(updated);
   };
 
-  const handleSubmit = async () => {
-    alert("Submitting claim...");
-    // Create the mapped answers array
-    const mappedAnswers = questions.map((q, i) => ({ question: q, answer: answers[i] }));
+  const handleSubmit = () => {
+    setErrorMsg("");
+    if (answers.length !== questions.length) {
+      setErrorMsg("Please answer all questions");
+      return;
+    }
 
-    // Fallback: usually you'll get a real user ID from your auth context
-    const mockUserId = "64b1f6d89a4cd8d022faae3f";
+    if (answers.some((a) => !a || a.trim() === "")) {
+      setErrorMsg("Please fill all answers");
+      return;
+    }
 
-    try {
-      await submitClaim({
-        item: id,
-        claimant: mockUserId,
-        description: "System generated automated claim.",
-        answers: mappedAnswers
-      });
-      alert("Claim submitted to MongoDB successfully ✅");
-    } catch (err) {
-      console.error(err);
-      alert("Error submitting claim ❌");
+    let allCorrect = true;
+    for (let i = 0; i < questions.length; i++) {
+      const correctAnswer = questions[i].answer || "";
+      if (answers[i].trim().toLowerCase() !== correctAnswer.trim().toLowerCase()) {
+        allCorrect = false;
+        break;
+      }
+    }
+
+    if (allCorrect) {
+      setSubmitted(true);
+    } else {
+      setErrorMsg("Incorrect answers. Please try again.");
     }
   };
 
-  if (loading) return <div className="p-10 text-center">Loading item details...</div>;
-  if (!item) return <div className="p-10 text-center">Item not found.</div>;
-
+  const itemName = item.name || item.itemName || item.title || "Unknown Item";
+  const progress = questions.length > 0 ? (answers.filter(a => a).length / questions.length) * 100 : 0;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6">
+    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl bg-card border border-border rounded-2xl shadow-lg p-6">
 
-      {/* ITEM DETAILS */}
-      <div className="border rounded-xl p-4 bg-card">
-        <h1 className="text-xl font-bold">{item.itemName || item.name}</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          {item.description}
+        {/* 🔥 HEADER */}
+        <h1 className="text-2xl font-bold mb-1">{itemName}</h1>
+        <p className="text-sm text-muted-foreground mb-4">
+          Location: {item.location || item.locationFound || "Unknown"} <br/>
+          Description: {item.description || "No description provided."}
         </p>
-        <p className="text-xs mt-2">📍 {item.location}</p>
-      </div>
 
-      {/* QUESTIONS */}
-      <div className="space-y-4">
-        <h2 className="font-semibold">Verification Questions</h2>
+        {questions.length > 0 ? (
+          <>
+            <p className="text-sm text-muted-foreground mb-6">
+              Answer the following questions to verify ownership
+            </p>
 
-        {questions.map((q, i) => (
-          <div key={i}>
-            <label className="text-sm font-medium">
-              {i + 1}. {q}
-            </label>
+            {/* 📊 PROGRESS */}
+            <div className="mb-6">
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-primary transition-all"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {answers.filter(a => a).length} / {questions.length} answered
+              </p>
+            </div>
 
-            <input
-              className="w-full border rounded p-2 mt-1"
-              placeholder="Your answer..."
-              value={answers[i]}
-              onChange={(e) => handleChange(e.target.value, i)}
-            />
+            {!submitted ? (
+              <div className="space-y-5">
+                {errorMsg && (
+                  <div className="text-red-500 bg-red-100 p-3 rounded-lg text-sm font-medium">
+                    {errorMsg}
+                  </div>
+                )}
+
+                {/* QUESTIONS */}
+                {questions.map((q: any, i: number) => (
+                  <div
+                    key={i}
+                    className="p-4 rounded-xl border border-border bg-muted/40"
+                  >
+                    <label className="block text-sm font-medium mb-2">
+                      {i + 1}. {q.question || q}
+                    </label>
+
+                    <input
+                      type="text"
+                      placeholder="Type your answer..."
+                      value={answers[i] || ""}
+                      onChange={(e) =>
+                        handleChange(i, e.target.value)
+                      }
+                      className="w-full p-3 rounded-lg border border-border bg-background outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                ))}
+
+                {/* SUBMIT */}
+                <button
+                  onClick={handleSubmit}
+                  className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition"
+                >
+                  Verify Ownership
+                </button>
+              </div>
+            ) : (
+              <div className="text-center py-10">
+                <div className="text-green-600 text-lg font-semibold mb-2">
+                  🎉 all r correct you r the owner of the item
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Your claim has been successfully verified!
+                </p>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-10">
+             <p className="text-sm text-muted-foreground">
+               No verification questions found for this item.
+             </p>
           </div>
-        ))}
+        )}
       </div>
-
-      {/* SUBMIT */}
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-primary text-white py-3 rounded-lg"
-      >
-        Submit for Verification
-      </button>
-
     </div>
   );
 }

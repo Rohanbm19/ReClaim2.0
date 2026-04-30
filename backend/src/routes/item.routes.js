@@ -1,12 +1,38 @@
-// backend/src/routes/item.routes.js
-const express = require("express");
+import express from "express";
+import Item from "../models/item.model.js";
+
 const router = express.Router();
-const itemController = require("../controllers/item.controller");
 
-router.get("/", itemController.getAllItems);
-router.get("/:id", itemController.getItemById);
-router.post("/", itemController.createItem);
-router.put("/:id", itemController.updateItem);
-router.delete("/:id", itemController.deleteItem);
+// GET items
+router.get("/", async (req, res) => {
+  try {
+    const items = await Item.find().sort({ createdAt: -1 });
+    res.json(items);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-module.exports = router;
+// GET single item by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: "Item not found" });
+    res.json(item);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST item
+router.post("/", async (req, res) => {
+  try {
+    const newItem = new Item(req.body);
+    const savedItem = await newItem.save();
+    res.status(201).json(savedItem);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+export default router;

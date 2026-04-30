@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { to: ROUTES.dashboard, label: "Dashboard", icon: LayoutDashboard },
-  { to: ROUTES.browse, label: "Browse Items", icon: Search },
+  { to: ROUTES.browse as any, label: "Browse Items", icon: Search },
   
   { to: ROUTES.report, label: "Report Item", icon: PlusSquare },
   

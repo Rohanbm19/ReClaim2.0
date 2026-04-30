@@ -1,10 +1,16 @@
-// backend/src/config/db.js
+const dns = require("dns");
 const mongoose = require("mongoose");
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB Connected ✅");
+    const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected");
   } catch (err) {
     console.error(err);
     process.exit(1);
