@@ -1,6 +1,14 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { ClerkProvider } from "@clerk/clerk-react";
 
 import appCss from "../styles.css?url";
+
+// Import your publishable key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!PUBLISHABLE_KEY) {
+  console.error("Missing VITE_CLERK_PUBLISHABLE_KEY in .env");
+}
 
 function NotFoundComponent() {
   return (
@@ -43,6 +51,13 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        src: `https://above-grouper-17.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js`,
+        "data-clerk-publishable-key": PUBLISHABLE_KEY,
+        async: true,
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -64,5 +79,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY || "missing_key"} afterSignOutUrl="/">
+      <Outlet />
+    </ClerkProvider>
+  );
 }

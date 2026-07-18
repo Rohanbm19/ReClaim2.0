@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   Search,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
+import { useClerk } from "@clerk/clerk-react";
 
 const navItems = [
   { to: ROUTES.dashboard, label: "Dashboard", icon: LayoutDashboard },
@@ -29,6 +30,17 @@ const navItems = [
 
 export function Sidebar() {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate({ to: "/", replace: true });
+    } catch (err) {
+      console.error("Failed to sign out:", err);
+    }
+  };
 
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 bg-sidebar text-sidebar-foreground min-h-screen sticky top-0">
@@ -88,7 +100,10 @@ export function Sidebar() {
       </div>
 
       <div className="p-3 pt-0">
-        <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-sidebar-primary text-sidebar-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-sidebar-primary text-sidebar-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+        >
           <LogOut className="h-4 w-4" /> Logout
         </button>
       </div>

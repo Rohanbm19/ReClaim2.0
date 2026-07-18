@@ -4,9 +4,15 @@ import { Upload } from "lucide-react";
 import React, { useState } from "react";
 import { addFoundItem } from "../services/itemService";
 
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
 export const Route = createFileRoute("/report")({
   head: () => ({ meta: [{ title: "Report Item — Campus Lost & Found" }] }),
-  component: Report,
+  component: () => (
+    <ProtectedRoute>
+      <Report />
+    </ProtectedRoute>
+  ),
 });
 
 function Report() {

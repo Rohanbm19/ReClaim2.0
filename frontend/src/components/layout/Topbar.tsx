@@ -1,6 +1,6 @@
-import { Bell, Search, ChevronDown } from "lucide-react";
-import avatar from "@/assets/avatar-user.jpg";
+import { Bell, Search } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
 
 export function Topbar() {
   return (
@@ -23,13 +23,19 @@ export function Topbar() {
             </span>
           </button>
 
-          <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
-  <div className="hidden sm:block">
-    <div className="text-sm font-semibold leading-tight">Riya Sharma</div>
-    <div className="text-xs text-muted-foreground">Student</div>
-  </div>
-  <ChevronDown className="h-4 w-4 text-muted-foreground" />
-</Link>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <div className="flex gap-2">
+              <SignInButton mode="modal">
+                <button className="text-sm font-medium hover:underline">Sign In</button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="text-sm font-medium bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90">Sign Up</button>
+              </SignUpButton>
+            </div>
+          </SignedOut>
         </div>
       </div>
     </header>

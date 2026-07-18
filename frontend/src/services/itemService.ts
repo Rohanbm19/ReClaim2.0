@@ -3,7 +3,7 @@ import axios from "axios";
 const API = "http://localhost:5000/api/items";
 
 // ✅ ADD THIS (for fetching items)
-export const recentItems = async () => {
+export const getItems = async () => {
   const res = await axios.get(API);
   return res.data;
 };

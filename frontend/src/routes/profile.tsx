@@ -2,9 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageContainer } from "@/components/layout/PageContainer";
 import avatar from "@/assets/avatar-user.jpg";
 import { Link } from "@tanstack/react-router";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
 export const Route = createFileRoute("/profile")({
   head: () => ({ meta: [{ title: "Profile — Campus Lost & Found" }] }),
-  component: Profile,
+  component: () => (
+    <ProtectedRoute>
+      <Profile />
+    </ProtectedRoute>
+  ),
 });
 
 function Profile() {

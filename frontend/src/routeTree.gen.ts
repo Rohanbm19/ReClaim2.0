@@ -11,11 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReportfoundRouteImport } from './routes/reportfound'
 import { Route as ReportRouteImport } from './routes/report'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MyItemsRouteImport } from './routes/my-items'
 import { Route as MyClaimsRouteImport } from './routes/my-claims'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as HerobannerRouteImport } from './routes/herobanner'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -32,6 +32,11 @@ const ReportfoundRoute = ReportfoundRouteImport.update({
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -52,11 +57,6 @@ const MyItemsRoute = MyItemsRouteImport.update({
 const MyClaimsRoute = MyClaimsRouteImport.update({
   id: '/my-claims',
   path: '/my-claims',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HerobannerRoute = HerobannerRouteImport.update({
@@ -101,11 +101,11 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
   '/herobanner': typeof HerobannerRoute
-  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
@@ -117,11 +117,11 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
   '/herobanner': typeof HerobannerRoute
-  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
@@ -134,11 +134,11 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/help': typeof HelpRoute
   '/herobanner': typeof HerobannerRoute
-  '/login': typeof LoginRoute
   '/my-claims': typeof MyClaimsRoute
   '/my-items': typeof MyItemsRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/report': typeof ReportRoute
   '/reportfound': typeof ReportfoundRoute
   '/admin/report-item': typeof AdminReportItemRoute
@@ -152,11 +152,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/help'
     | '/herobanner'
-    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
+    | '/register'
     | '/report'
     | '/reportfound'
     | '/admin/report-item'
@@ -168,11 +168,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/help'
     | '/herobanner'
-    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
+    | '/register'
     | '/report'
     | '/reportfound'
     | '/admin/report-item'
@@ -184,11 +184,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/help'
     | '/herobanner'
-    | '/login'
     | '/my-claims'
     | '/my-items'
     | '/notifications'
     | '/profile'
+    | '/register'
     | '/report'
     | '/reportfound'
     | '/admin/report-item'
@@ -201,11 +201,11 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   HelpRoute: typeof HelpRoute
   HerobannerRoute: typeof HerobannerRoute
-  LoginRoute: typeof LoginRoute
   MyClaimsRoute: typeof MyClaimsRoute
   MyItemsRoute: typeof MyItemsRoute
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
   ReportRoute: typeof ReportRoute
   ReportfoundRoute: typeof ReportfoundRoute
   AdminReportItemRoute: typeof AdminReportItemRoute
@@ -226,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof ReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -254,13 +261,6 @@ declare module '@tanstack/react-router' {
       path: '/my-claims'
       fullPath: '/my-claims'
       preLoaderRoute: typeof MyClaimsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/herobanner': {
@@ -321,11 +321,11 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   HelpRoute: HelpRoute,
   HerobannerRoute: HerobannerRoute,
-  LoginRoute: LoginRoute,
   MyClaimsRoute: MyClaimsRoute,
   MyItemsRoute: MyItemsRoute,
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
   ReportRoute: ReportRoute,
   ReportfoundRoute: ReportfoundRoute,
   AdminReportItemRoute: AdminReportItemRoute,

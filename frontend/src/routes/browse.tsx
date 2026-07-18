@@ -2,10 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { ItemCard } from "@/components/features/items/ItemCard";
-import { recentItems } from "../services/itemService";
+import { getItems } from "../services/itemService";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 export const Route = createFileRoute("/browse")({
-  component: Browse,
+  component: () => (
+    <ProtectedRoute>
+      <Browse />
+    </ProtectedRoute>
+  ),
 });
 
 function Browse() {
@@ -16,7 +21,7 @@ function Browse() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await recentItems();
+        const data = await getItems();
         setItems(data);
       } catch (error) {
         console.error("Failed to fetch items:", error);

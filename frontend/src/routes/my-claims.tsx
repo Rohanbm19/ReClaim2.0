@@ -15,9 +15,15 @@ const statusColor: Record<string, string> = {
   Rejected: "text-destructive bg-destructive/10",
 };
 
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
 export const Route = createFileRoute("/my-claims")({
   head: () => ({ meta: [{ title: "My Claims — Campus Lost & Found" }] }),
-  component: MyClaims,
+  component: () => (
+    <ProtectedRoute>
+      <MyClaims />
+    </ProtectedRoute>
+  ),
 });
 
 function MyClaims() {

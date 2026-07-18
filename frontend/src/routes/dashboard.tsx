@@ -1,26 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
+
 import { AppShell } from "@/components/layout/AppShell";
 import { HeroBanner } from "@/components/features/items/HeroBanner";
 import { ItemCard } from "@/components/features/items/ItemCard";
 import { HowItWorks } from "@/components/features/items/HowItWorks";
 import { SystemOverview } from "@/components/features/items/SystemOverview";
-import { RecentTransactions } from "@/components/features/items/RecentTransactions";
-import { YourClaims } from "@/components/features/claims/YourClaims";
-import { recentItems } from "@/services/itemService";
+
+// ✅ CHANGED HERE
+import { getItems } from "@/services/itemService";
+
 import { mockSystemItems } from "@/services/mockData";
 
 import React, { useEffect, useState } from "react";
 
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
 export const Route = createFileRoute("/dashboard")({
-  component: Dashboard,
+  component: () => (
+    <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>
+  ),
 });
 
 function Dashboard() {
   const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    recentItems().then(setItems).catch(console.error);
+    // ✅ CHANGED HERE
+    getItems().then(setItems).catch(console.error);
   }, []);
+
   return (
     <AppShell>
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6">
@@ -53,8 +63,6 @@ function Dashboard() {
             items={mockSystemItems}
             role="admin"
           />
-          <RecentTransactions />
-          <YourClaims />
         </aside>
       </div>
     </AppShell>

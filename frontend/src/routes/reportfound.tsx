@@ -1,11 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { addFoundItem } from "../services/itemService";
+
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 export const Route = createFileRoute("/reportfound")({
-  component: ReportFoundPage,
+  component: () => (
+    <ProtectedRoute>
+      <ReportFoundPage />
+    </ProtectedRoute>
+  ),
 });
 
 function ReportFoundPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     itemName: "",
     description: "",
@@ -14,8 +22,9 @@ function ReportFoundPage() {
     location: "",
   });
 
-  const [questions, setQuestions] = useState<string[]>([""]);
+  const [questions, setQuestions] = useState<{question: string, answer: string}[]>([{question: "", answer: ""}]);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 📝 Handle form input
   const handleChange = (
@@ -28,14 +37,14 @@ function ReportFoundPage() {
   };
 
   // 🧠 Question handlers
-  const updateQuestion = (index: number, value: string) => {
+  const updateQuestion = (index: number, field: "question" | "answer", value: string) => {
     const updated = [...questions];
-    updated[index] = value;
+    updated[index][field] = value;
     setQuestions(updated);
   };
 
   const addQuestion = () => {
-    setQuestions([...questions, ""]);
+    setQuestions([...questions, {question: "", answer: ""}]);
   };
 
   // ✅ Validation
@@ -44,7 +53,7 @@ function ReportFoundPage() {
   };
 
   // 🚀 MAIN SUBMIT LOGIC (STEP 2)
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -52,44 +61,42 @@ function ReportFoundPage() {
       return;
     }
 
+    setIsSubmitting(true);
     setError("");
 
     // 🔥 Create item object
     const newItem = {
-      id: Date.now().toString(),
-      name: formData.itemName,
+      itemName: formData.itemName,
       description: formData.description,
       location: formData.location,
       date: formData.date,
       time: formData.time,
-      questions: questions.filter((q) => q.trim() !== ""),
-      reportedAgo: "Just now",
+      questions: questions.filter((q) => q.question.trim() !== "" && q.answer.trim() !== ""),
       verified: false,
     };
 
-    // 🔥 Save to localStorage
-    const existing =
-      JSON.parse(localStorage.getItem("foundItems") || "[]");
+    try {
+      await addFoundItem(newItem);
+      alert("Item reported successfully!");
 
-    localStorage.setItem(
-      "foundItems",
-      JSON.stringify([newItem, ...existing])
-    );
-
-    console.log("Saved Item:", newItem);
-
-    alert("Item reported successfully!");
-
-    // 🔄 Reset form
-    setFormData({
-      itemName: "",
-      description: "",
-      date: "",
-      time: "",
-      location: "",
-    });
-
-    setQuestions([""]);
+      // 🔄 Reset form
+      setFormData({
+        itemName: "",
+        description: "",
+        date: "",
+        time: "",
+        location: "",
+      });
+      setQuestions([{question: "", answer: ""}]);
+      
+      // Redirect to browse page
+      navigate({ to: "/browse" });
+    } catch (err: any) {
+      console.error("Error submitting item:", err);
+      setError(err.response?.data?.message || "Failed to submit item. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -167,16 +174,22 @@ function ReportFoundPage() {
             </label>
 
             {questions.map((q, i) => (
-              <input
-                key={i}
-                type="text"
-                placeholder={`Question ${i + 1}`}
-                value={q}
-                onChange={(e) =>
-                  updateQuestion(i, e.target.value)
-                }
-                className="w-full p-2 border rounded mt-2"
-              />
+              <div key={i} className="flex flex-col gap-2 mt-2">
+                <input
+                  type="text"
+                  placeholder={`Question ${i + 1}`}
+                  value={q.question}
+                  onChange={(e) => updateQuestion(i, "question", e.target.value)}
+                  className="w-full p-2 border rounded"
+                />
+                <input
+                  type="text"
+                  placeholder={`Answer ${i + 1}`}
+                  value={q.answer}
+                  onChange={(e) => updateQuestion(i, "answer", e.target.value)}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
             ))}
 
             <button
@@ -191,9 +204,10 @@ function ReportFoundPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground p-3 rounded-lg font-medium hover:opacity-90 transition"
+            disabled={isSubmitting}
+            className="w-full bg-primary text-primary-foreground p-3 rounded-lg font-medium hover:opacity-90 transition disabled:opacity-50"
           >
-            Submit Report
+            {isSubmitting ? "Submitting..." : "Submit Report"}
           </button>
         </form>
       </div>
