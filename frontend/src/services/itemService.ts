@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/items";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API = `${API_BASE}/api/items`;
 
 // ✅ ADD THIS (for fetching items)
 export const getItems = async () => {
@@ -22,6 +23,6 @@ export const getItemById = async (id: string) => {
 
 // Submit a claim for an item
 export const submitClaim = async (data: any) => {
-  const res = await axios.post("http://localhost:5000/api/claims", data);
+  const res = await axios.post(`${API_BASE}/api/claims`, data);
   return res.data;
 };
