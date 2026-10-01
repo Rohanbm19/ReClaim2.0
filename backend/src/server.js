@@ -7,7 +7,11 @@ import itemRoutes from "./routes/item.routes.js";
 dotenv.config();
 
 const app = express();
-const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://localhost:27017/reclaim2";
+const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+
+if (!mongoUri && process.env.NODE_ENV === "production") {
+  throw new Error("MONGO_URI is required in production. Set it in the Render environment variables.");
+}
 
 app.use(
   cors({
@@ -24,7 +28,7 @@ app.get("/health", (_req, res) => {
 app.use("/api/items", itemRoutes);
 
 mongoose
-  .connect(mongoUri)
+  .connect(mongoUri || "mongodb://127.0.0.1:27017/reclaim")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
