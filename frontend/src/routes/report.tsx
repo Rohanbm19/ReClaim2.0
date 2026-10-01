@@ -91,7 +91,7 @@ function Report() {
   };
 
   return (
-    <PageContainer title="Report Found Item" description="Help return a lost item to its owner — record it on the blockchain.">
+    <PageContainer title="Report Found Item" description="Help return a lost item to its owner by submitting the details and verification questions.">
       <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-card p-6 space-y-5 max-w-2xl">
         {error && <p className="text-red-500 font-medium text-sm">{error}</p>}
         <Field label="Item Name">
@@ -191,7 +191,7 @@ function Report() {
           </label>
         </Field>
         <button type="submit" className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium shadow-[var(--shadow-elevated)]">
-          Submit & Record on Blockchain
+          Submit Found Item
         </button>
       </form>
       <style>{`.input{display:block;width:100%;padding:0.625rem 0.875rem;border:1px solid var(--color-border);border-radius:0.625rem;background:var(--color-background);font-size:0.875rem;outline:none;transition:border-color .15s}.input:focus{border-color:var(--color-primary)}`}</style>

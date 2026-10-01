@@ -10,10 +10,10 @@ export function HeroBanner() {
       <div className="grid lg:grid-cols-2 gap-6 items-center">
         <div>
           <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
-            Secure. Transparent. Trustworthy.
+            Secure. Simple. Reliable.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground max-w-md">
-            A blockchain-based lost &amp; found system for smart campuses.
+            A trusted campus lost &amp; found system for quickly identifying and returning items.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link to="/report" className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium shadow-[var(--shadow-elevated)] hover:opacity-90 transition-opacity inline-flex items-center justify-center">
@@ -27,7 +27,7 @@ export function HeroBanner() {
         <div className="hidden lg:flex justify-end">
           <img
             src={heroImg}
-            alt="Blockchain secured lost and found"
+            alt="Campus lost and found"
             className="h-56 w-auto object-contain"
             width={384}
             height={320}

@@ -2,12 +2,12 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { ClerkProvider } from "@clerk/clerk-react";
 
 import appCss from "../styles.css?url";
+import { getClerkPublishableKey } from "../lib/utils";
 
-// Import your publishable key
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = getClerkPublishableKey();
 
 if (!PUBLISHABLE_KEY) {
-  console.error("Missing VITE_CLERK_PUBLISHABLE_KEY in .env");
+  console.warn("Missing VITE_CLERK_PUBLISHABLE_KEY in .env; auth features will be disabled until it is configured.");
 }
 
 function NotFoundComponent() {
@@ -37,10 +37,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Campus Lost & Found — Blockchain Based System" },
-      { name: "description", content: "Secure, transparent, blockchain-based lost and found system for smart campuses." },
+      { title: "Campus Lost & Found" },
+      { name: "description", content: "A campus lost and found platform for reporting, matching, and returning lost items." },
       { property: "og:title", content: "Campus Lost & Found" },
-      { property: "og:description", content: "A blockchain-based lost & found system for smart campuses." },
+      { property: "og:description", content: "A campus lost and found platform for reporting, matching, and returning lost items." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -79,8 +79,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  if (!PUBLISHABLE_KEY) {
+    return <Outlet />;
+  }
+
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY || "missing_key"} afterSignOutUrl="/">
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
       <Outlet />
     </ClerkProvider>
   );

@@ -36,7 +36,7 @@ function RegisterPage() {
           </div>
           <div>
             <span className="font-bold text-lg tracking-tight text-white">ReClaim 2.0</span>
-            <span className="block text-[10px] text-primary font-semibold tracking-wider uppercase">Blockchain Edition</span>
+            <span className="block text-[10px] text-primary font-semibold tracking-wider uppercase">Campus Portal</span>
           </div>
         </div>
 
@@ -52,7 +52,7 @@ function RegisterPage() {
               <span className="bg-gradient-to-r from-primary-foreground via-purple-300 to-indigo-200 bg-clip-text text-transparent">Your Belongings.</span>
             </h1>
             <p className="text-base text-sidebar-foreground/80 font-normal leading-relaxed">
-              Create a cryptographic identity tied to your campus credentials to protect your devices and books.
+              Create your account to report items, track claims, and recover lost belongings on campus.
             </p>
           </div>
 
@@ -63,8 +63,8 @@ function RegisterPage() {
                 <Lock className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h4 className="font-semibold text-white text-sm">Cryptographic Handshake</h4>
-                <p className="text-xs text-sidebar-foreground/60 mt-0.5">Claims and ownership verifications are logged as transactions securely.</p>
+                <h4 className="font-semibold text-white text-sm">Owner Verification</h4>
+                <p className="text-xs text-sidebar-foreground/60 mt-0.5">Every claim is checked through confirmation questions and admin review.</p>
               </div>
             </div>
 
@@ -83,8 +83,8 @@ function RegisterPage() {
                 <Cpu className="h-5 w-5 text-purple-300" />
               </div>
               <div>
-                <h4 className="font-semibold text-white text-sm">Smart Notification Matches</h4>
-                <p className="text-xs text-sidebar-foreground/60 mt-0.5">Real-time matching filters through campus lost item data continuously.</p>
+                <h4 className="font-semibold text-white text-sm">Smart Item Matching</h4>
+                <p className="text-xs text-sidebar-foreground/60 mt-0.5">Instant matching helps connect people with the right lost items faster.</p>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@ function RegisterPage() {
 
         {/* Footer Info */}
         <div className="text-xs text-sidebar-foreground/40 relative z-10">
-          &copy; {new Date().getFullYear()} ReClaim 2.0. All blockchain transactions are secure.
+          &copy; {new Date().getFullYear()} ReClaim 2.0. Campus item recovery made simpler.
         </div>
       </div>
 

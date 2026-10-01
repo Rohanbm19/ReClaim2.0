@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API = import.meta.env.VITE_API_URL;
+import { getApiBaseUrl } from "../lib/utils";
+
+const API = getApiBaseUrl();
 
 export const studentLogin = async (data: {
   username: string;

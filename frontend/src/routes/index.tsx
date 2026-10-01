@@ -33,7 +33,7 @@ function IndexPage() {
             </div>
             <div>
               <span className="font-bold text-lg tracking-tight text-white">ReClaim 2.0</span>
-              <span className="block text-[10px] text-primary font-semibold tracking-wider uppercase">Blockchain Edition</span>
+              <span className="block text-[10px] text-primary font-semibold tracking-wider uppercase">Campus Portal</span>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ function IndexPage() {
                 <span className="bg-gradient-to-r from-primary-foreground via-purple-300 to-indigo-200 bg-clip-text text-transparent">Trustworthy.</span>
               </h1>
               <p className="text-base text-sidebar-foreground/80 font-normal leading-relaxed">
-                A blockchain-powered campus lost & found network that ensures claims are secure, verified, and transparent.
+                A campus lost &amp; found network for reporting items, verifying ownership, and helping students recover what they lost.
               </p>
             </div>
 
@@ -61,7 +61,7 @@ function IndexPage() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white text-sm">Owner Authentication</h4>
-                  <p className="text-xs text-sidebar-foreground/60 mt-0.5">Claims are verified by answering ownership questions secured on-chain.</p>
+                  <p className="text-xs text-sidebar-foreground/60 mt-0.5">Claims are verified through ownership questions and secure admin review.</p>
                 </div>
               </div>
 
@@ -89,7 +89,7 @@ function IndexPage() {
 
           {/* Footer Info */}
           <div className="text-xs text-sidebar-foreground/40 relative z-10">
-            &copy; {new Date().getFullYear()} ReClaim 2.0. All blockchain transactions are secure.
+            &copy; {new Date().getFullYear()} ReClaim 2.0. Built for safer campus item recovery.
           </div>
         </div>
 

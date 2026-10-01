@@ -15,11 +15,11 @@ export interface Claim {
   status: "Pending" | "Approved" | "Rejected";
 }
 
-export type BlockchainTx = {
+export type ItemActivity = {
   id: string;
   type: "Item Registered" | "Item Claimed";
   itemId: string;
-  txHash: string;
+  reference: string;
   ago: string;
   status: "Success" | "Pending" | "Failed";
 };

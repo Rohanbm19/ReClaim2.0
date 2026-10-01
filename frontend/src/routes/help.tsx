@@ -2,18 +2,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 const faqs = [
-  // 🔐 Blockchain & Security
+  // 🔐 Security & Verification
   {
-    q: "How does blockchain verification work?",
-    a: "Every item reported is stored as a tamper-proof record using a hash on the blockchain. This ensures no one can modify ownership or claim history.",
+    q: "How does item verification work?",
+    a: "Every reported item is checked against the details submitted, and claims are reviewed through admin-approved questions to confirm ownership.",
   },
   {
     q: "Is my data secure?",
-    a: "Yes. Only hashed and necessary metadata is stored on-chain. Personal data remains private and protected.",
+    a: "Yes. Personal information is kept limited to what is needed for verification and processing, and access is restricted to authorized users.",
   },
   {
     q: "Can someone fake an item claim?",
-    a: "No. Claims require verification through admin-approved questions and OTP/QR authentication.",
+    a: "No. Claims require verification through admin-approved questions and secure account checks.",
   },
 
   // 📦 Item Reporting
@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "Can I edit a reported item?",
-    a: "No. Once submitted, items cannot be edited to maintain blockchain integrity. You must contact admin for corrections.",
+    a: "No. Once submitted, items should be reviewed by admin for any necessary corrections or updates.",
   },
 
   // 🔍 Claim Process
@@ -67,7 +67,7 @@ const faqs = [
   // 🧑‍💼 Admin
   {
     q: "What does the admin do?",
-    a: "Admins verify items, approve claims, manage disputes, and ensure blockchain records are accurate.",
+    a: "Admins verify items, approve claims, manage disputes, and keep item records accurate and up to date.",
   },
   {
     q: "Can admin reject a claim?",
