@@ -43,7 +43,7 @@ export const Route = createRootRoute({
       { property: "og:description", content: "A campus lost and found platform for reporting, matching, and returning lost items." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@CampusLostAndFound" },
     ],
     links: [
       {
