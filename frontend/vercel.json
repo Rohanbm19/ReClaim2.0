@@ -1,8 +1,3 @@
 {
-  "rewrites": [
-    {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "tanstack-start"
-}
-  ]
 }
