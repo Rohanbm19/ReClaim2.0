@@ -15,7 +15,10 @@ if (!mongoUri && process.env.NODE_ENV === "production") {
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || process.env.FRONTEND_URL || "*",
+    origin:
+      process.env.CORS_ORIGIN ||
+      process.env.FRONTEND_URL ||
+      "https://your-vercel-project.vercel.app",
   })
 );
 
